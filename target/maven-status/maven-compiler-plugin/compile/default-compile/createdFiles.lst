@@ -1,0 +1,10 @@
+com\mycompany\asteroids\entity\Asteroid.class
+com\mycompany\asteroids\Game.class
+com\mycompany\asteroids\entity\Player.class
+com\mycompany\asteroids\entity\AsteroidSize.class
+com\mycompany\asteroids\entity\Entity.class
+com\mycompany\asteroids\Game$1.class
+com\mycompany\asteroids\entity\Bullet.class
+com\mycompany\asteroids\util\Clock.class
+com\mycompany\asteroids\util\Vector2.class
+com\mycompany\asteroids\WorldPanel.class
