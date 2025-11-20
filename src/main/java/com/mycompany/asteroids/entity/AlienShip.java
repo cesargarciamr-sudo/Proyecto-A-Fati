@@ -178,8 +178,8 @@ public class AlienShip extends Entity {
         double dy = playerPos.y - position.y;
         double angleToPlayer = Math.atan2(dy, dx);
         
-        // Crear y registrar la bala
-        Bullet bullet = new Bullet(this, angleToPlayer);
+        // Crear y registrar la bala alienígena (AlienBullet)
+        AlienBullet bullet = new AlienBullet(this, angleToPlayer);
         game.registerEntity(bullet);
     }
     
@@ -214,7 +214,7 @@ public class AlienShip extends Entity {
     
     @Override
     public void handleCollision(Game game, Entity other) {
-        // Recibir daño de balas
+        // Recibir daño SOLO de balas del jugador (Bullet), NO de balas alienígenas (AlienBullet)
         if(other.getClass() == Bullet.class) {
             hitsReceived++;
             damageFlashCounter = 10; // Flash al recibir daño
