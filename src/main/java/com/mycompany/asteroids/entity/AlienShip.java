@@ -177,7 +177,7 @@ public class AlienShip extends Entity {
     
     @Override
     public void handleCollision(Game game, Entity other) {
-        // Solo recibir daño de balas
+        // Recibir daño de balas
         if(other.getClass() == Bullet.class) {
             hitsReceived++;
             damageFlashCounter = 10; // Flash al recibir daño
@@ -187,6 +187,11 @@ public class AlienShip extends Entity {
                 flagForRemoval();
                 game.addScore(getKillScore());
             }
+        }
+        
+        // Matar al jugador si choca con la nave alienígena
+        if(other.getClass() == Player.class) {
+            game.killPlayer();
         }
     }
     
