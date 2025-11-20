@@ -285,13 +285,15 @@ public class Player extends Entity {
 		}
 	}
 	
-	@Override
-	public void handleCollision(Game game, Entity other) {
-		//Kill the player if it collides with an Asteroid.
-		if(other.getClass() == Asteroid.class) {
-			game.killPlayer();
-		}
-	}
+@Override
+public void handleCollision(Game game, Entity other) {
+    // Kill the player if it collides with an Asteroid or AlienBullet or AlienShip.
+    if(other.getClass() == Asteroid.class || 
+       other.getClass() == AlienBullet.class ||
+       other.getClass() == AlienShip.class) {
+        game.killPlayer();
+    }
+}
 	
 	@Override
 	public void draw(Graphics2D g, Game game) {
