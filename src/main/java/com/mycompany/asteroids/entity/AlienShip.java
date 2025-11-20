@@ -165,7 +165,7 @@ public class AlienShip extends Entity {
     }
     
     /**
-     * Dispara una bala hacia el jugador.
+     * Dispara una bala hacia el jugador (con margen de error).
      * 
      * @param game Instancia del juego.
      */
@@ -178,8 +178,13 @@ public class AlienShip extends Entity {
         double dy = playerPos.y - position.y;
         double angleToPlayer = Math.atan2(dy, dx);
         
-        // Crear y registrar la bala alienígena (AlienBullet)
-        AlienBullet bullet = new AlienBullet(this, angleToPlayer);
+        // Agregar margen de error aleatorio (entre -0.5 y +0.5 radianes)
+        // Esto hace que el alien falle más seguido
+        double errorAngle = (random.nextDouble() - 0.5) * 1.0; // Ajusta el 1.0 para más/menos error
+        double finalAngle = angleToPlayer + errorAngle;
+        
+        // Crear y registrar la bala alienígena (AlienBullet) con el ángulo impreciso
+        AlienBullet bullet = new AlienBullet(this, finalAngle);
         game.registerEntity(bullet);
     }
     
@@ -225,11 +230,7 @@ public class AlienShip extends Entity {
                 game.addScore(getKillScore());
             }
         }
-        
-        // Matar al jugador si choca con la nave alienígena
-        if(other.getClass() == Player.class) {
-            game.killPlayer();
-        }
+        // El alien ya NO mata al jugador por contacto, solo con sus disparos
     }
     
     @Override
