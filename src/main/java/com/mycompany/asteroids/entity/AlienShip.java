@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * Representa una nave alienígena en el mundo del juego.
  * Este enemigo aguanta 3 impactos y cambia su velocidad y posición
- * aleatoriamente cada 5 segundos.
+ * aleatoriamente cada 5 segundos. También dispara al jugador.
  * 
  * @author Fátima Valeria Bocanegra Costilla
  */
@@ -57,6 +57,11 @@ public class AlienShip extends Entity {
     private static final double ROTATION_SPEED = 0.03;
     
     /**
+     * Tiempo entre disparos (en frames).
+     */
+    private static final int FIRE_RATE = 90; // Dispara cada 1.5 segundos
+    
+    /**
      * Contador de impactos recibidos.
      */
     private int hitsReceived;
@@ -65,6 +70,11 @@ public class AlienShip extends Entity {
      * Contador de frames desde el último cambio.
      */
     private int frameCounter;
+    
+    /**
+     * Contador de frames desde el último disparo.
+     */
+    private int fireCounter;
     
     /**
      * Instancia de Random para cambios aleatorios.
@@ -89,6 +99,7 @@ public class AlienShip extends Entity {
         this.random = random;
         this.hitsReceived = 0;
         this.frameCounter = 0;
+        this.fireCounter = FIRE_RATE; // Dispara al poco tiempo de aparecer
         this.damageFlashCounter = 0;
     }
     
@@ -153,6 +164,25 @@ public class AlienShip extends Entity {
         damageFlashCounter = 15;
     }
     
+    /**
+     * Dispara una bala hacia el jugador.
+     * 
+     * @param game Instancia del juego.
+     */
+    private void fireAtPlayer(Game game) {
+        // Obtener la posición del jugador
+        Vector2 playerPos = game.getPlayer().getPosition();
+        
+        // Calcular el ángulo hacia el jugador
+        double dx = playerPos.x - position.x;
+        double dy = playerPos.y - position.y;
+        double angleToPlayer = Math.atan2(dy, dx);
+        
+        // Crear y registrar la bala
+        Bullet bullet = new Bullet(this, angleToPlayer);
+        game.registerEntity(bullet);
+    }
+    
     @Override
     public void update(Game game) {
         super.update(game);
@@ -172,6 +202,13 @@ public class AlienShip extends Entity {
         // Decrementar contador de flash de daño
         if(damageFlashCounter > 0) {
             damageFlashCounter--;
+        }
+        
+        // Sistema de disparo
+        fireCounter++;
+        if(fireCounter >= FIRE_RATE) {
+            fireAtPlayer(game);
+            fireCounter = 0;
         }
     }
     
