@@ -5,6 +5,7 @@
 package com.mycompany.asteroids;
 
 import com.mycompany.asteroids.entity.Asteroid;
+import com.mycompany.asteroids.entity.AlienShip;
 import com.mycompany.asteroids.entity.Entity;
 import com.mycompany.asteroids.entity.Player;
 import com.mycompany.asteroids.util.Clock;
